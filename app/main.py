@@ -1,11 +1,13 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
+
+import UserService
 
 
 app = Flask(__name__)
 
 @app.get("/users")
 def get_users():
-    pass
+    return jsonify(UserService.get_all_users()), 200
 
 @app.get("/users<id:int>")
 def get_single_user():
