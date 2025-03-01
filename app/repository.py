@@ -31,21 +31,22 @@ class UserRepository:
 
     def create_user(self, data: dict, calculate_age) -> json:
         if data['firstName'] not in self._users or data['lastName'] not in self._users:
-            return None
-        users = self._users
-        max_user_id = max((user["id"] for user in users), default=0)
-        new_user_id = max_user_id + 1
-        new_user = {
-            "id": new_user_id,
-            "name": data['firstName'],
-            "lastname": data['lastName'],
-            "age": calculate_age,
-            "group": data["group"]
+            users = self._users
+            max_user_id = max((user["id"] for user in users), default=0)
+            new_user_id = max_user_id + 1
+            new_user = {
+                "id": new_user_id,
+                "name": data['firstName'],
+                "lastname": data['lastName'],
+                "age": calculate_age,
+                "group": data["group"]
 
-        }
-        users.append(new_user)
-        writing_users(users=users)
-        return new_user
+            }
+            users.append(new_user)
+            writing_users(users=users)
+            return new_user
+        else:
+            raise NotImplementedError
 
     def update_user(self, user_id: int, data: dict, calculate_age) -> None:
         users = self._users
