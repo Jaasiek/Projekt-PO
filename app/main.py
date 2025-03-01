@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
-
-from UserService import UserService
+from controllers import UserService
 
 app = Flask(__name__)
 
@@ -10,7 +9,7 @@ def get_users():
     return jsonify(UserService.get_all_users()), 200
 
 
-@app.get("/users<id:int>")
+@app.get("/users/<int:id>")
 def get_single_user(id):
     try:
         user = UserService.get_user(user_id=id)
@@ -29,7 +28,7 @@ def create_user():
         return jsonify({"An error occurred": "Failed to create user"}), 401
 
 
-@app.patch("/users<id:int>")
+@app.patch("/users/<int:id>")
 def patch_user(id):
     try:
         UserService.update_user(user_id=id)
@@ -38,14 +37,13 @@ def patch_user(id):
         return jsonify({"An error occurred": "Invalid request"}), 400
 
 
-@app.delete("/users<id:int>")
+@app.delete("/users/<int:id>")
 def delete_user(id):
     try:
         UserService.delete_user(user_id=id)
         return jsonify({"message": "User deleted successfully"}), 204
     except KeyError:
         return jsonify({"An error occurred": "User not found"}), 400
-
 
 
 if __name__ == "__main__":
