@@ -15,7 +15,7 @@ class UserService:
     def create_user(self, data: dict):
         return self._repository.create_user(data=data, calculate_age=self._calculate_age(data['birthYear']))
 
-    def update_user(self, user_id, data):
+    def update_user(self, user_id, data: dict):
         return self._repository.update_user(user_id=user_id, data=data, calculate_age=self._calculate_age(data['birthYear']))
 
     def delete_user(self, user_id):
