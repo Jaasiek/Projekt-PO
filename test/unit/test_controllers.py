@@ -27,6 +27,3 @@ def test_call_repository_on_get_method(
     controller.get_all_users()
     expected = call()
     assert expected in repository.get.mock_calls
-
-
-d
