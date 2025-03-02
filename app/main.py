@@ -1,12 +1,15 @@
 from flask import Flask, request, jsonify
 from controllers import UserService
+from repository import UserRepository
 
 app = Flask(__name__)
 
 
 @app.get("/users")
 def get_users():
-    return jsonify(UserService.get_all_users()), 200
+    repo = UserRepository()
+    controller = UserService(repository=repo)
+    return jsonify(controller.get_all_users()), 200
 
 
 @app.get("/users/<int:id>")
