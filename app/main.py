@@ -14,8 +14,9 @@ def get_users():
 
 @app.get("/users/<int:id>")
 def get_single_user(id):
+    repo = UserRepository()
     try:
-        user = UserService.get_user(user_id=id)
+        user = UserService(repository=repo).get_user(user_id=id)
         return jsonify(user), 200
     except NotImplementedError:
         return jsonify({"An error occurred": "User not found"}), 404
@@ -24,8 +25,9 @@ def get_single_user(id):
 @app.post("/users")
 def create_user():
     data = request.get_json()
+    repo = UserRepository()
     try:
-        new_user = UserService.create_user(data=data)
+        new_user = UserService(repository=repo).create_user(data=data)
         return jsonify(new_user), 201
     except NotImplementedError:
         return jsonify({"An error occurred": "Failed to create user"}), 400
@@ -33,9 +35,10 @@ def create_user():
 
 @app.patch("/users/<int:id>")
 def patch_user(id):
+    repo = UserRepository()
     data = request.get_json()
     try:
-        UserService.update_user(user_id=id, data=data)
+        UserService(repository=repo).update_user(user_id=id, data=data)
         return jsonify({"message": "User updated successfully"}), 200
     except NotImplementedError:
         return jsonify({"An error occurred": "Invalid request"}), 400
@@ -43,8 +46,9 @@ def patch_user(id):
 
 @app.delete("/users/<int:id>")
 def delete_user(id):
+    repo = UserRepository()
     try:
-        UserService.delete_user(user_id=id)
+        UserService(repository=repo).delete_user(user_id=id)
         return jsonify({"message": "User deleted successfully"}), 202
     except KeyError:
         return jsonify({"An error occurred": "User not found"}), 400
