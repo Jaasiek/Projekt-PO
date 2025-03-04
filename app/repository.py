@@ -39,7 +39,7 @@ class UserRepository:
                 "name": data['firstName'],
                 "lastname": data['lastName'],
                 "age": calculate_age,
-                "group": data["group"]
+                "group": data["group"] if data["group"] in {"admin", "user", "premium"} else (_ for _ in ()).throw(NotImplementedError)
 
             }
             users.append(new_user)
